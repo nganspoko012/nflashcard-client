@@ -16,17 +16,15 @@ const Layout = (props) => {
     <>
       <MainNav onToggleBars={toggleBarsHandler} />
       {isShowingBars && <SubNav />}
-      <MainContent />
+      <MainContent isShowingBars={isShowingBars} />
     </>
   );
 };
 
-const MainContent = () => {
+const MainContent = (props) => {
   return (
-    <div
-      className={`relative top-12 flex bg-gray-100 h-screen ml-${
-        isShowingBars ? 36 : 0
-      }`}
+    <main
+      className={`relative top-12 p-4 flex ml-${props.isShowingBars ? 36 : 0}`}
     >
       <Routes>
         <Route path="/" exact element={<HomePage />} />
@@ -35,7 +33,7 @@ const MainContent = () => {
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
-    </div>
+    </main>
   );
 };
 

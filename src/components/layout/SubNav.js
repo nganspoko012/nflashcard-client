@@ -2,7 +2,7 @@ import NavItem from "./NavItem";
 
 const SubNav = () => {
   return (
-    <nav className="fixed top-12 w-36 h-full bg-white z-10">
+    <nav className="fixed top-12 w-36 h-full bg-white shadow-lg z-10">
       <ul>
         <NavItem to="/decks" type="subnav">
           My Decks

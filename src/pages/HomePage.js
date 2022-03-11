@@ -1,5 +1,6 @@
+import DecksList from "../components/decks/DecksList";
 const HomePage = (props) => {
-  return <div>HomePage</div>;
+  return <DecksList />;
 };
 
 export default HomePage;
