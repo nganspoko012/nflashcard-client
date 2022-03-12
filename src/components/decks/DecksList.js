@@ -73,7 +73,7 @@ const DecksList = (props) => {
   return (
     <ul className="flex flex-wrap w-full gap-4">
       {DUMMY_DECKS.map((deck) => (
-        <li className="w-full md:w-1/5" key={deck.id}>
+        <li className="w-full md:w-1/5 shrink-0" key={deck.id}>
           <Deck {...deck} type="community" />
         </li>
       ))}

@@ -7,11 +7,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Avatar from "../ui/Avatar";
 import Card from "../ui/Card";
+import DeckMenu from "./DeckMenu";
 import { useState } from "react";
-import DeckOptionsOverlay from "./DeckOptionsOverlay";
+import Modal from "../ui/Modal";
 
 const Deck = (props) => {
-  const [isShowingOverlay, setIsShowingOverlay] = useState(false);
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   //private scope
   let scopeIcon = faLock;
   if (props.scope === "public") {
@@ -22,14 +23,15 @@ const Deck = (props) => {
       <div className="flex flex-nowrap">
         <h3 className="font-bold w-10/12">{props.title}</h3>
         {/* For Overlay options */}
-        <div className="relative ml-auto flex flex-nowrap gap-1">
-          <FontAwesomeIcon icon={scopeIcon} className="w-4" />
-          <FontAwesomeIcon
-            icon={faEllipsisVertical}
-            className="w-4"
-            onClick={() => setIsShowingOverlay(!isShowingOverlay)}
-          />
-          {isShowingOverlay && <DeckOptionsOverlay />}
+        <div className="relative ml-auto flex flex-nowrap gap-1 self-start">
+          <div>
+            <FontAwesomeIcon icon={scopeIcon} className="w-4" />
+          </div>
+          <div>
+            <DeckMenu onDelete={() => setIsShowDeleteModal(true)}>
+              <FontAwesomeIcon icon={faEllipsisVertical} className="w-4" />
+            </DeckMenu>
+          </div>
         </div>
       </div>
       <div className="flex flex-nowrap mt-auto items-center gap-1">
@@ -55,6 +57,15 @@ const Deck = (props) => {
           </div>
         )}
       </div>
+      {isShowDeleteModal && (
+        <Modal
+          isOpen={isShowDeleteModal}
+          setIsOpen={setIsShowDeleteModal}
+          title="Do you want to delete this deck?"
+          description="When delete a deck you can't track your progress in that deck anymore."
+          onConfirm={() => {}}
+        />
+      )}
     </Card>
   );
 };
