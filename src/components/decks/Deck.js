@@ -10,8 +10,11 @@ import Card from "../ui/Card";
 import DeckMenu from "./DeckMenu";
 import { useState } from "react";
 import Modal from "../ui/Modal";
+import { decksAction } from "../../store/deck-slice";
+import { useDispatch } from "react-redux";
 
 const Deck = (props) => {
+  const dispatch = useDispatch();
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false);
   //private scope
   let scopeIcon = faLock;
@@ -19,7 +22,7 @@ const Deck = (props) => {
     scopeIcon = faEarthAmericas;
   }
   return (
-    <Card className="h-32 min-w-min max-w-72 flex flex-col p-2 bg-white">
+    <Card className="h-32 max-w-72 flex m-auto flex-col p-2 bg-white">
       <div className="flex flex-nowrap">
         <h3 className="font-bold w-10/12">{props.title}</h3>
         {/* For Overlay options */}
@@ -63,7 +66,10 @@ const Deck = (props) => {
           setIsOpen={setIsShowDeleteModal}
           title="Do you want to delete this deck?"
           description="When delete a deck you can't track your progress in that deck anymore."
-          onConfirm={() => {}}
+          onConfirm={() => {
+            dispatch(decksAction.removeDeck(props.id));
+            setIsShowDeleteModal(false);
+          }}
         />
       )}
     </Card>

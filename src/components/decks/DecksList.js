@@ -1,83 +1,37 @@
-import Deck from "./Deck";
+import { useNavigate } from "react-router-dom";
 
-let DUMMY_DECKS = [
-  {
-    id: 1,
-    title: "600 Essential Words For TOEIC",
-    scope: "private",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 2,
-    title: "English Grammar",
-    scope: "public",
-    author: {
-      name: "Athony",
-    },
-    dueCards: 5,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 3,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 4,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 5,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 6,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-];
+import Deck from "./Deck";
+import Button from "../ui/Button";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 const DecksList = (props) => {
+  let navigate = useNavigate();
+  const decks = useSelector((state) => state.decks.decks);
+  const addButtonClickHandler = (event) => {
+    event.preventDefault();
+    navigate("/add-deck");
+  };
   return (
-    <ul className="flex flex-wrap w-full gap-4">
-      {DUMMY_DECKS.map((deck) => (
-        <li className="w-full md:w-1/5 shrink-0" key={deck.id}>
-          <Deck {...deck} type="community" />
-        </li>
-      ))}
-    </ul>
+    <div className="w-full md:container md:mx-auto">
+      <div className="flex justify-end">
+        <Button onClick={addButtonClickHandler}>
+          <div>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+          Add Deck
+        </Button>
+      </div>
+
+      <ul className="flex flex-col md:flex-row justify-center md:justify-start md:flex-wrap mt-4">
+        {decks.map((deck) => (
+          <li className="w-full md:w-1/3 lg:w-1/4 shrink-0 p-1" key={deck.id}>
+            <Deck {...deck} type="community" />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

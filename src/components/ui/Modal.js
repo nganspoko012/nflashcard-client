@@ -9,7 +9,6 @@ const Modal = (props) => {
     >
       <Dialog.Overlay />
 
-      {/* This element is to trick the browser into centering the modal contents. */}
       <div className="w-full max-w-md p-6 m-auto mt-24 overflow-hidden text-left align-middle transition-all transform bg-white opacity-100 shadow-xl rounded-2xl">
         <Dialog.Title as="h3" className="text lg font-medium text-gray-900">
           {props.title}

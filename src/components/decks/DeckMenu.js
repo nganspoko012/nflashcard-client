@@ -11,7 +11,6 @@ const options = [
 const DeckMenu = (props) => {
   let deleteOption = options.find((option) => option.text === "Delete Deck");
   deleteOption.onClick = () => props.onDelete();
-  console.log(options);
   return (
     <Menu>
       <Menu.Button className="hover:text-white hover:bg-blue-500 cursor-pointer">
