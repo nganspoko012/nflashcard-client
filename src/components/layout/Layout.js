@@ -5,7 +5,6 @@ import AddDeck from "../../pages/AddDeck";
 import CommunityPage from "../../pages/CommunityPage";
 import HomePage from "../../pages/HomePage";
 import LoginPage from "../../pages/LoginPage";
-import TestTinyMCE from "../../pages/TestTinyMCE";
 import MainNav from "./Navigation/MainNav";
 import SubNav from "./Navigation/SubNav";
 
@@ -35,7 +34,6 @@ const MainContent = (props) => {
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/test" element={<TestTinyMCE />} />
       </Routes>
     </main>
   );

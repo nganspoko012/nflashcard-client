@@ -1,5 +1,6 @@
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
+import FlashcardEditor from "./FlashcardEditor";
 import useInput from "../hooks/use-input";
 import { decksAction } from "../store/deck-slice";
 import { useSelector } from "react-redux";
@@ -48,36 +49,44 @@ const AddDeck = (props) => {
         onSubmit={submitHandler}
         className="w-full mt-4 rounded-md ring-1 ring-gray-200 shadow-lg p-4"
       >
-        <label htmlFor="title" className="block font-lg font-bold">
-          Title:
-        </label>
-        <Input
-          type="text"
-          id="title"
-          errorMessage="Title must have length larger than 3"
-          placeholder="Deck title"
-          hasError={titleHasError}
-          value={titleValue}
-          onChange={onTitleChanged}
-          onBlur={onTitleBlur}
-          isValid={titleIsValid}
-        />
-        <label htmlFor="description" className="block font-lg font-bold">
-          Description
-        </label>
-        <Input
-          type="text"
-          id="description"
-          hasError={desHasError}
-          errorMessage="Description must have length larger than 3"
-          placeholder="Add description ..."
-          value={desValue}
-          onChange={onDesChanged}
-          onBlur={onDesBlur}
-          isValid={desIsValid}
-        />
+        <div className="text-left">
+          <h4 className="font-bold">Deck Info</h4>
+          <label htmlFor="title" className="block font-lg font-bold text">
+            Title:
+          </label>
+          <Input
+            type="text"
+            id="title"
+            errorMessage="Title must have length larger than 3"
+            placeholder="Deck title"
+            hasError={titleHasError}
+            value={titleValue}
+            onChange={onTitleChanged}
+            onBlur={onTitleBlur}
+            isValid={titleIsValid}
+          />
+          <label htmlFor="description" className="block font-lg font-bold">
+            Description
+          </label>
+          <Input
+            type="text"
+            id="description"
+            hasError={desHasError}
+            errorMessage="Description must have length larger than 3"
+            placeholder="Add description ..."
+            value={desValue}
+            onChange={onDesChanged}
+            onBlur={onDesBlur}
+            isValid={desIsValid}
+          />
+        </div>
+
         <div className="flex justify-end mt-4">
           <Button>Add</Button>
+        </div>
+        <div className="container flex flex-nowrap justify-stretch gap-2">
+          <FlashcardEditor />
+          <FlashcardEditor />
         </div>
       </form>
     </div>

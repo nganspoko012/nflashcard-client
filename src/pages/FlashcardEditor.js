@@ -1,16 +1,14 @@
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import Button from "../components/ui/Button";
 
 const backendUrl = "https://localhost:7046/";
 
 const tinyMCEApiKey = "xvg747f4fwkubgp85rlkyvbvqocdtnkgfcyqzhig8p55inlq";
 
-const TestTinyMCE = (props) => {
+const FlashcardEditor = (props) => {
   const editorRef = useRef(null);
 
   const imageUpLoadHandler = (blobInfo, success, failure, progress) => {
-    console.log("uploading");
     let formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
     fetch(`https://localhost:7046/Decks/UploadPhysical`, {
@@ -33,7 +31,7 @@ const TestTinyMCE = (props) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container border-b-2 border-gray-900 focus-within:border-blue-500">
       <Editor
         apiKey={tinyMCEApiKey}
         onInit={(evt, editor) => (editorRef.current = editor)}
@@ -53,22 +51,14 @@ const TestTinyMCE = (props) => {
             "bold italic backcolor | alignleft aligncenter " +
             "alignright alignjustify | bullist numlist outdent indent | " +
             "removeformat | image code | help",
-          content_style:
-            "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-          readonly: 1,
+          content_style: `body { font-family:Helvetica,Arial,sans-serif; font-size:14px; text-align: center; }`,
           menubar: false,
+          statusbar: false,
+          inline: true,
         }}
       />
-      <Button
-        className="mt-4"
-        onClick={() => {
-          if (editorRef.current) console.log(editorRef.current.getContent());
-        }}
-      >
-        Test
-      </Button>
     </div>
   );
 };
 
-export default TestTinyMCE;
+export default FlashcardEditor;
