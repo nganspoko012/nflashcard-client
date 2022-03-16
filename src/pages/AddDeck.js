@@ -1,35 +1,51 @@
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
-import FlashcardEditor from "./FlashcardEditor";
 import useInput from "../hooks/use-input";
 import { decksAction } from "../store/deck-slice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useReducer } from "react";
 import FlashcardInput from "../components/flashcards/FlashcardInput";
+
+const flashcardInputsReducer = (flashcardInputs, action) => {
+  switch (action.type) {
+    case "ADD": {
+      console.log(flashcardInputs);
+      return flashcardInputs.concat({
+        id: flashcardInputs.length + 1,
+        frontCard: "",
+        backCard: "",
+      });
+    }
+    case "CHANGE": {
+      const newFlashcardInputs = [...flashcardInputs];
+      let editingFlashcardId = newFlashcardInputs.findIndex(
+        (input) => input.id === action.payload.id
+      );
+      newFlashcardInputs[editingFlashcardId] = {
+        ...newFlashcardInputs[editingFlashcardId],
+        ...action.payload,
+      };
+      return newFlashcardInputs;
+    }
+    case "REMOVE": {
+      return flashcardInputs.filter((input) => input.id !== action.id);
+    }
+    default:
+      return flashcardInputs;
+  }
+};
 
 const AddDeck = (props) => {
   const decksCount = useSelector((state) => state.decks.decks.length + 1);
-  const dispatch = useDispatch();
+  const [flashcardInputs, dispatchFlashcardInputs] = useReducer(
+    flashcardInputsReducer,
+    []
+  );
+  const dispatchDeck = useDispatch();
   const navigate = useNavigate();
 
-  const [flashcardInputs, setFlashcardInputs] = useState([]);
-  const addFlashcardHandler = (event) => {
-    event.preventDefault();
-    setFlashcardInputs((prevFlashcardInput) =>
-      prevFlashcardInput.concat({
-        id: prevFlashcardInput.length + 1,
-        frontCard: "",
-        backCard: "",
-      })
-    );
-  };
-  const removeInputHandler = (id) => {
-    setFlashcardInputs((prevFlashcardInput) =>
-      prevFlashcardInput.filter((flashcardInput) => flashcardInput.id !== id)
-    );
-  };
   const {
     value: titleValue,
     isValid: titleIsValid,
@@ -45,8 +61,12 @@ const AddDeck = (props) => {
     onChange: onDesChanged,
     onBlur: onDesBlur,
   } = useInput((value) => value.trim().length > 3);
+
   const submitHandler = (event) => {
     event.preventDefault();
+    const flashcards = flashcardInputs.filter(
+      (input) => input.frontCard !== "" && input.backCard !== ""
+    );
     const deckToAdd = {
       id: decksCount + 1,
       title: titleValue,
@@ -54,11 +74,12 @@ const AddDeck = (props) => {
       author: {
         name: "Ngan Vo",
       },
+      flashcards: flashcards,
       dueCards: 0,
-      totalCards: 0,
+      totalCards: flashcards.length,
       avgStars: 0,
     };
-    dispatch(decksAction.addDeck(deckToAdd));
+    dispatchDeck(decksAction.addDeck(deckToAdd));
     navigate("/decks");
   };
   return (
@@ -107,11 +128,14 @@ const AddDeck = (props) => {
             <FlashcardInput
               key={flashcardInput.id}
               id={flashcardInput.id}
-              onRemoveInput={removeInputHandler}
+              dispatch={dispatchFlashcardInputs}
             />
           ))}
           <div className="flex">
-            <Button className="mx-auto" onClick={addFlashcardHandler}>
+            <Button
+              className="mx-auto"
+              onClick={() => dispatchFlashcardInputs({ type: "ADD" })}
+            >
               Add Flashcard
             </Button>
           </div>

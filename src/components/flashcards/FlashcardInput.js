@@ -1,25 +1,55 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FlashcardEditor from "../../pages/FlashcardEditor";
 import Button from "../ui/Button";
 
-const FlashcardInput = (props) => {
+const FlashcardInput = ({ id, dispatch }) => {
   const [frontCardValue, setFrontCardValue] = useState("");
   const [backCardValue, setBackCardValue] = useState("");
 
+  const frontCardInputChangeHandler = useCallback(
+    (value) => {
+      setFrontCardValue(value);
+
+      dispatch({
+        type: "CHANGE",
+        payload: { id: id, frontCard: frontCardValue },
+      });
+    },
+    [frontCardValue, dispatch, id]
+  );
+
+  const backCardInputChangeHandler = useCallback(
+    (value) => {
+      setBackCardValue(value);
+
+      dispatch({
+        type: "CHANGE",
+        payload: { id: id, backCard: backCardValue },
+      });
+    },
+    [backCardValue, dispatch, id]
+  );
+
   const removeInputHandler = (event) => {
-    props.onRemoveInput(props.id);
+    dispatch({ type: "REMOVE", id: id });
   };
 
   return (
     <div className="w-full flex flex-nowrap gap-2">
       <div className="w-full">
-        <FlashcardEditor value={frontCardValue} setValue={setFrontCardValue} />
+        <FlashcardEditor
+          value={frontCardValue}
+          setValue={frontCardInputChangeHandler}
+        />
         <div className="text-center text-gray-500">Front Card</div>
       </div>
       <div className="w-full">
-        <FlashcardEditor value={backCardValue} setValue={setBackCardValue} />
+        <FlashcardEditor
+          value={backCardValue}
+          setValue={backCardInputChangeHandler}
+        />
         <div className="text-center text-gray-500">Back Card</div>
       </div>
       <Button

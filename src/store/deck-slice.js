@@ -80,6 +80,7 @@ const deckSlice = createSlice({
   initialState,
   reducers: {
     addDeck: (state, action) => {
+      console.log(action.payload);
       state.decks.push(action.payload);
       state.newDecks.push(action.payload);
       state.newDecksCount++;
