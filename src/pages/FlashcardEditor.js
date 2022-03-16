@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
 const backendUrl = "https://localhost:7046/";
@@ -6,8 +6,6 @@ const backendUrl = "https://localhost:7046/";
 const tinyMCEApiKey = "xvg747f4fwkubgp85rlkyvbvqocdtnkgfcyqzhig8p55inlq";
 
 const FlashcardEditor = (props) => {
-  const editorRef = useRef(null);
-
   const imageUpLoadHandler = (blobInfo, success, failure, progress) => {
     let formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
@@ -34,8 +32,8 @@ const FlashcardEditor = (props) => {
     <div className="container border-b-2 border-gray-900 focus-within:border-blue-500">
       <Editor
         apiKey={tinyMCEApiKey}
-        onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue="<p>This is the initial value.</p>"
+        value={props.value}
+        onEditorChange={(newValue, editor) => props.setValue(newValue)}
         init={{
           height: 30,
           max_height: 500,
