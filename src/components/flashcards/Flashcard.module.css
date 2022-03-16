@@ -1,0 +1,7 @@
+.flip {
+  transform: rotateX(180deg);
+}
+
+.flashcard-back {
+  transform: rotateX(180deg);
+}

@@ -5,7 +5,7 @@ const Button = (props) => {
   }`;
   // Cancel button
   if (props.type === "cancel") {
-    className = `text-gray-900 bg-white hover:bg-gray-200 cursor-pointer inline-flex justify-center ring-1 gap-2 p-2 w-32 ${
+    className = `text-gray-900 bg-white hover:bg-gray-200 cursor-pointer inline-flex justify-center gap-2 p-2 w-32 ${
       props.className ? props.className : ""
     }`;
   }

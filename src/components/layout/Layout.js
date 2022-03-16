@@ -4,6 +4,7 @@ import AboutUsPage from "../../pages/AboutUsPage";
 import AddDeck from "../../pages/AddDeck";
 import CommunityPage from "../../pages/CommunityPage";
 import HomePage from "../../pages/HomePage";
+import LearnPage from "../../pages/LearnPage";
 import LoginPage from "../../pages/LoginPage";
 import MainNav from "./Navigation/MainNav";
 import SubNav from "./Navigation/SubNav";
@@ -33,6 +34,7 @@ const MainContent = (props) => {
         <Route path="/add-deck" element={<AddDeck />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/learn" element={<LearnPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </main>
