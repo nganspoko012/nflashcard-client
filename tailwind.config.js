@@ -24,7 +24,14 @@ const transformStyle = plugin(function ({ addUtilities }) {
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        128: "32rem",
+      },
+      height: {
+        128: "32rem",
+      },
+    },
   },
   plugins: [backfaceVisibility, transformStyle],
 };

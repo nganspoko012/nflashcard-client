@@ -8,6 +8,13 @@ let DUMMY_DECKS = [
     author: {
       name: "Ngan Vo",
     },
+    flashcards: [
+      {
+        id: 1,
+        frontCard: "<p>Test</p>",
+        backCard: "<p>Kiem Tra</p>",
+      },
+    ],
     dueCards: 10,
     totalCards: 20,
     avgStars: 4.3,
@@ -19,6 +26,7 @@ let DUMMY_DECKS = [
     author: {
       name: "Athony",
     },
+    flashcards: [],
     dueCards: 5,
     totalCards: 20,
     avgStars: 4.3,
@@ -30,39 +38,14 @@ let DUMMY_DECKS = [
     author: {
       name: "Ngan Vo",
     },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 4,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 5,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
-    dueCards: 10,
-    totalCards: 20,
-    avgStars: 4.3,
-  },
-  {
-    id: 6,
-    title: "JLPT N2",
-    scope: "public",
-    author: {
-      name: "Ngan Vo",
-    },
+    flashcards: [
+      {
+        id: 1,
+        frontCard: "<p>Test</p>",
+        backCard: "<p>Kiem Tra</p>",
+      },
+    ],
+
     dueCards: 10,
     totalCards: 20,
     avgStars: 4.3,

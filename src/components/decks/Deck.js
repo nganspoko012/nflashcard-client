@@ -24,7 +24,10 @@ const Deck = (props) => {
   }
   return (
     <Card className="h-32 max-w-72 flex m-auto flex-col p-2 bg-white">
-      <Link className="h-full flex flex-col flex-nowrap" to={`/learn`}>
+      <Link
+        className="h-full flex flex-col flex-nowrap"
+        to={`/learn/${props.id}`}
+      >
         <div className="flex flex-nowrap">
           <h3 className="font-bold w-10/12">{props.title}</h3>
           {/* For Overlay options */}

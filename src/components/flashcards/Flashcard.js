@@ -1,27 +1,22 @@
-import { useState } from "react";
 import styles from "./Flashcard.module.css";
 
-const Flashcard = (props) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+const Flashcard = ({ isFlipped, setIsFlipped, frontCard, backCard }) => {
   return (
-    <div className="mt-32">
-      <div>Deck name</div>
+    <div
+      className={`w-full h-[40vh] md:h-[50vh] relative preserve-3d ${
+        isFlipped ? styles.flip : ""
+      } transition-transform`}
+      onClick={() => setIsFlipped((prevState) => !prevState)}
+    >
       <div
-        className={`container w-48 h-48 relative preserve-3d ${
-          isFlipped ? styles.flip : ""
-        } transition-transform`}
-        onClick={() => setIsFlipped((prevState) => !prevState)}
-      >
-        <div className="absolute w-full h-full bg-white shadow-lg backface-hidden z-10">
-          Front Card
-        </div>
-        {/*Back card*/}
-        <div
-          className={`absolute w-full h-full bg-white shadow-lg backface-hidden z-10 ${styles["flashcard-back"]}`}
-        >
-          Back Card
-        </div>
-      </div>
+        className="absolute w-full h-full bg-white shadow-md backface-hidden z-10"
+        dangerouslySetInnerHTML={{ __html: frontCard }}
+      ></div>
+      {/*Back card*/}
+      <div
+        className={`absolute w-full h-full bg-white shadow-md backface-hidden z-10 ${styles["flashcard-back"]}`}
+        dangerouslySetInnerHTML={{ __html: backCard }}
+      ></div>
     </div>
   );
 };

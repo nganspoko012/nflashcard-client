@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FlashcardEditor from "../../pages/FlashcardEditor";
+import FlashcardEditor from "./FlashcardEditor";
 import Button from "../ui/Button";
 
 const FlashcardInput = ({ id, dispatch }) => {
@@ -11,25 +11,23 @@ const FlashcardInput = ({ id, dispatch }) => {
   const frontCardInputChangeHandler = useCallback(
     (value) => {
       setFrontCardValue(value);
-
       dispatch({
         type: "CHANGE",
-        payload: { id: id, frontCard: frontCardValue },
+        payload: { id: id, frontCard: value },
       });
     },
-    [frontCardValue, dispatch, id]
+    [dispatch, id]
   );
 
   const backCardInputChangeHandler = useCallback(
     (value) => {
       setBackCardValue(value);
-
       dispatch({
         type: "CHANGE",
-        payload: { id: id, backCard: backCardValue },
+        payload: { id: id, backCard: value },
       });
     },
-    [backCardValue, dispatch, id]
+    [dispatch, id]
   );
 
   const removeInputHandler = (event) => {

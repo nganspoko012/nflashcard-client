@@ -33,7 +33,9 @@ const FlashcardEditor = (props) => {
       <Editor
         apiKey={tinyMCEApiKey}
         value={props.value}
-        onEditorChange={(newValue, editor) => props.setValue(newValue)}
+        onEditorChange={(newValue, editor) => {
+          props.setValue(newValue);
+        }}
         init={{
           height: 30,
           max_height: 500,
@@ -53,6 +55,9 @@ const FlashcardEditor = (props) => {
           menubar: false,
           statusbar: false,
           inline: true,
+          style_formats: [
+            { title: "Center", block: "p", styles: { "text-align": "center" } },
+          ],
         }}
       />
     </div>

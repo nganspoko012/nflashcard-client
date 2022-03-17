@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useReducer } from "react";
+import DOMPurify from "dompurify";
 import FlashcardInput from "../components/flashcards/FlashcardInput";
 
 const flashcardInputsReducer = (flashcardInputs, action) => {
@@ -38,7 +39,7 @@ const flashcardInputsReducer = (flashcardInputs, action) => {
 };
 
 const AddDeck = (props) => {
-  const decksCount = useSelector((state) => state.decks.decks.length + 1);
+  const decksCount = useSelector((state) => state.decks.decks.length);
   const [flashcardInputs, dispatchFlashcardInputs] = useReducer(
     flashcardInputsReducer,
     []
@@ -64,9 +65,13 @@ const AddDeck = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const flashcards = flashcardInputs.filter(
-      (input) => input.frontCard !== "" && input.backCard !== ""
-    );
+    const flashcards = flashcardInputs
+      .filter((input) => input.frontCard !== "" && input.backCard !== "")
+      .map((input) => ({
+        ...input,
+        frontCard: DOMPurify.sanitize(input.frontCard),
+        backCard: DOMPurify.sanitize(input.backCard),
+      }));
     const deckToAdd = {
       id: decksCount + 1,
       title: titleValue,

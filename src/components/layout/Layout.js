@@ -26,7 +26,9 @@ const Layout = (props) => {
 const MainContent = (props) => {
   return (
     <main
-      className={`relative top-12 p-4 flex ml-${props.isShowingBars ? 36 : 0}`}
+      className={`relative top-12 p-4 flex ${
+        props.isShowingBars ? "ml-36" : ""
+      }`}
     >
       <Routes>
         <Route path="/" exact element={<HomePage />} />
@@ -34,7 +36,7 @@ const MainContent = (props) => {
         <Route path="/add-deck" element={<AddDeck />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/learn" element={<LearnPage />} />
+        <Route path="/learn/:deckId" element={<LearnPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </main>
