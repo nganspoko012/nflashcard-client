@@ -1,4 +1,34 @@
+// New Card Status
+const NEW_STEPS = [1, 10]; // minutes
+const GRADUATE_INTERVAL = 1; // days
+const EASY_INTERVAL = 4; // days
+const STARTING_EASE = 250; // percents
+const NEW_OPTIONS = ["again", "good"];
+
+// Review Card Status
+const REVIEW_OPTIONS = ["again", "hard", "good", "easy"];
+const EASY_BONUS = 130; // percents
+const INTERVAL_MODIFIER = 100; // percents
+const MAXIMUM_INTERVAL = 36500; //d ays
+
+// Lapses Status
+const LAPSES_STEPS = [10]; // minutes
+const NEW_INTERVAL = 70; // percents
+const MINIMUM_INTERVAL = 1; // days
+
 const LearnButtons = (props) => {
+  const learnButtonClickHandler = (option) => {
+    switch (props.status) {
+      case "new": {
+        switch (option) {
+          case "again": {
+            props.steps_index = 0;
+            return 1;
+          }
+        }
+      }
+    }
+  };
   return (
     <div
       className="w-full h-16 grid grid-cols-4 text-white"
