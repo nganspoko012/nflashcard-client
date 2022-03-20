@@ -1,43 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { learnActions } from "../store/learnSlice";
 import Flashcard from "../components/flashcards/Flashcard";
 import LearnButtons from "../components/flashcards/LearnButtons";
 import LearnProgress from "../components/flashcards/LearnProgress";
 
 const LearnPage = (props) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
+  const dispatch = useDispatch();
   const { deckId } = useParams();
-  const decks = useSelector((state) => state.decks.decks);
-  const deck = decks.find((deck) => {
-    console.log(deck.id, deckId);
-    return deck.id === +deckId;
-  });
-  console.log(deck);
-  const nextHandler = () => {
-    let nextIndex =
-      currentFlashcardIndex === deck.length - 1
-        ? deck.length
-        : currentFlashcardIndex + 1;
-    setCurrentFlashcardIndex(nextIndex);
-  };
+  const deck = useSelector((state) =>
+    state.decks.decks.find((deck) => deck.id === +deckId)
+  );
+
+  useEffect(() => {
+    dispatch(
+      learnActions.start({
+        deckId: deck.id,
+        dueCards: deck.flashcards.filter((flashcard) => {
+          const dueDate = flashcard.lastedLearnDate + flashcard.interval;
+          const today = Date.now();
+          console.log(today - dueDate);
+          if (today - dueDate > 0) {
+            return true;
+          }
+          return false;
+        }),
+      })
+    );
+  }, [deck, dispatch]);
+
+  const dueCards = useSelector((state) => state.learn.dueCards);
+  const completedCards = useSelector((state) => state.learn.completedCards);
+
+  console.log(dueCards);
+
   return (
     <div className="w-full md:container mx-auto">
-      {deck?.flashcards.length > 0 ? (
+      {dueCards.length > 0 ? (
         <div className="container w-full md:w-[60vw] max-w-screen-lg mx-auto flex flex-col items-strech gap-4">
           <div>Deck Name</div>
           <LearnProgress
-            learnedCards={currentFlashcardIndex}
-            totalLearnCards={deck.flashcards.length}
+            learnedCards={completedCards.length}
+            totalLearnCards={dueCards.length + completedCards.length}
           />
           <Flashcard
             isFlipped={isFlipped}
             setIsFlipped={setIsFlipped}
-            frontCard={deck.flashcards[currentFlashcardIndex].frontCard}
-            backCard={deck.flashcards[currentFlashcardIndex].backCard}
+            frontCard={dueCards[0].frontCard}
+            backCard={dueCards[0].backCard}
           />
-          {isFlipped && <LearnButtons onClick={nextHandler} />}
+          {isFlipped && <LearnButtons card={dueCards[0]} />}
         </div>
       ) : (
         <div>Not found!</div>

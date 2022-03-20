@@ -1,7 +1,7 @@
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import useInput from "../hooks/use-input";
-import { decksAction } from "../store/deck-slice";
+import { decksAction } from "../store/deckSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ const flashcardInputsReducer = (flashcardInputs, action) => {
         id: flashcardInputs.length + 1,
         frontCard: "",
         backCard: "",
+        status: "new",
+        steps_index: 0,
       });
     }
     case "CHANGE": {
@@ -38,7 +40,7 @@ const flashcardInputsReducer = (flashcardInputs, action) => {
   }
 };
 
-const AddDeck = (props) => {
+const AddDeckPage = (props) => {
   const decksCount = useSelector((state) => state.decks.decks.length);
   const [flashcardInputs, dispatchFlashcardInputs] = useReducer(
     flashcardInputsReducer,
@@ -150,4 +152,4 @@ const AddDeck = (props) => {
   );
 };
 
-export default AddDeck;
+export default AddDeckPage;

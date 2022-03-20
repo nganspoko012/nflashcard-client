@@ -10,7 +10,7 @@ import Card from "../ui/Card";
 import DeckMenu from "./DeckMenu";
 import { useState } from "react";
 import Modal from "../ui/Modal";
-import { decksAction } from "../../store/deck-slice";
+import { decksAction } from "../../store/deckSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 

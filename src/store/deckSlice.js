@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { STARTING_EASE } from "../util/newInterval";
 
 let DUMMY_DECKS = [
   {
@@ -11,8 +12,23 @@ let DUMMY_DECKS = [
     flashcards: [
       {
         id: 1,
-        frontCard: "<p>Test</p>",
-        backCard: "<p>Kiem Tra</p>",
+        frontCard: "<p>Test 1</p>",
+        backCard: "<p>Kiem Tra 1</p>",
+        status: "new",
+        steps_index: 0,
+        lastedLearnDate: Date.now(),
+        ease_factor: STARTING_EASE,
+        interval: 0,
+      },
+      {
+        id: 2,
+        frontCard: "<p>Test 2</p>",
+        backCard: "<p>Kiem Tra 2</p>",
+        status: "new",
+        steps_index: 0,
+        lastedLearnDate: Date.now(),
+        ease_factor: STARTING_EASE,
+        interval: 0,
       },
     ],
     dueCards: 10,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AboutUsPage from "../../pages/AboutUsPage";
-import AddDeck from "../../pages/AddDeck";
+import AddDeckPage from "../../pages/AddDeckPage";
 import CommunityPage from "../../pages/CommunityPage";
 import HomePage from "../../pages/HomePage";
 import LearnPage from "../../pages/LearnPage";
@@ -33,7 +33,7 @@ const MainContent = (props) => {
       <Routes>
         <Route path="/" exact element={<HomePage />} />
         <Route path="/decks" exact element={<HomePage />}></Route>
-        <Route path="/add-deck" element={<AddDeck />} />
+        <Route path="/add-deck" element={<AddDeckPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/learn/:deckId" element={<LearnPage />} />

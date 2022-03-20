@@ -1,56 +1,79 @@
-// New Card Status
-const NEW_STEPS = [1, 10]; // minutes
-const GRADUATE_INTERVAL = 1; // days
-const EASY_INTERVAL = 4; // days
-const STARTING_EASE = 250; // percents
-const NEW_OPTIONS = ["again", "good"];
+import { getNewInterval, humanFriendlyTime } from "../../util/newInterval";
+import { learnActions } from "../../store/learnSlice";
+import { useDispatch } from "react-redux";
 
-// Review Card Status
+const NEW_OPTIONS = ["again", "good", "easy"];
 const REVIEW_OPTIONS = ["again", "hard", "good", "easy"];
-const EASY_BONUS = 130; // percents
-const INTERVAL_MODIFIER = 100; // percents
-const MAXIMUM_INTERVAL = 36500; //d ays
+const RELEARN_OPTIONS = ["again", "good"];
 
-// Lapses Status
-const LAPSES_STEPS = [10]; // minutes
-const NEW_INTERVAL = 70; // percents
-const MINIMUM_INTERVAL = 1; // days
-
-const LearnButtons = (props) => {
-  const learnButtonClickHandler = (option) => {
-    switch (props.status) {
-      case "new": {
-        switch (option) {
-          case "again": {
-            props.steps_index = 0;
-            return 1;
-          }
-        }
-      }
+const LearnButton = (props) => {
+  const dispatch = useDispatch();
+  const clickHandler = (event) => {
+    event.preventDefault();
+    try {
+      const { newCard, newInterval } = getNewInterval(props.card, props.option);
+      dispatch(learnActions.learnACard({ card: newCard, newInterval }));
+    } catch (error) {
+      console.log(error.message);
     }
   };
+  let bgColor = "bg-red-500";
+  if (props.option === "hard") {
+    bgColor = "bg-orange-500";
+  } else if (props.option === "good") {
+    bgColor = "bg-green-500";
+  } else if (props.option === "easy") {
+    bgColor = "bg-blue-500";
+  }
   return (
-    <div
-      className="w-full h-16 grid grid-cols-4 text-white"
-      onClick={props.onClick}
+    <button
+      className={`${bgColor} h-full flex flex-col items-center justify-center capitalize`}
+      onClick={clickHandler}
     >
-      <div className="bg-red-500 h-full    flex flex-col items-center justify-center">
-        <div>Again</div>
-        <div>1min</div>
-      </div>
-      <div className="bg-orange-500 h-full flex flex-col items-center justify-center">
-        <div>Hard</div>
-        <div>10min</div>
-      </div>
-      <div className="bg-blue-500 h-full   flex flex-col items-center justify-center">
-        <div>Good</div>
-        <div>1d</div>
-      </div>
-      <div className="bg-green-500 h-full  flex flex-col items-center justify-center">
-        <div>Easy</div>
-        <div>4d</div>
-      </div>
-    </div>
+      <div>{props.option}</div>
+      <div>{props.uiInterval}</div>
+    </button>
+  );
+};
+
+const LearnButtons = (props) => {
+  let buttons = null;
+  let gridCols = "";
+
+  const mapOptions = (options) => {
+    return options.map((option) => {
+      const { newInterval } = getNewInterval(props.card, option);
+      console.log(newInterval);
+      return (
+        <LearnButton
+          key={option}
+          card={props.card}
+          option={option}
+          uiInterval={humanFriendlyTime(newInterval)}
+        />
+      );
+    });
+  };
+
+  switch (props.card.status) {
+    case "new":
+      gridCols = "grid-cols-3";
+      buttons = mapOptions(NEW_OPTIONS);
+      break;
+    case "learned":
+      gridCols = "grid-cols-4";
+      buttons = mapOptions(REVIEW_OPTIONS);
+      break;
+    case "relearning":
+      gridCols = "grid-cols-2";
+      buttons = mapOptions(RELEARN_OPTIONS);
+      break;
+    default: {
+      return <div>Some thing went wrong with this flashcard!</div>;
+    }
+  }
+  return (
+    <div className={`w-full h-16 grid ${gridCols} text-white`}>{buttons}</div>
   );
 };
 
