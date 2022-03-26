@@ -31,7 +31,7 @@ jobs:
 
       - name: Build
         run: npm run build --if-present
-        env:
+        with:
           REACT_APP_TINYMCE_APIKEY: ${{ secrets.REACT_APP_TINYMCE_APIKEY }}
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
 
@@ -40,5 +40,5 @@ jobs:
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{secrets.ACTIONS_DELOY_KEY}}
+          deploy_key: ${{secrets.ACTIONS_DEPLOY_KEY}}
           publish_dir: ./build
