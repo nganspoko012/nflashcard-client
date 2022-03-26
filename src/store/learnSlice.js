@@ -22,9 +22,8 @@ const learnSlice = createSlice({
           (card) => card.id !== action.payload.card.id
         );
         //put modified card to backend
-      }
-      // put card back to due cards
-      else {
+      } else {
+        // put card back to due cards
         state.dueCards = state.dueCards.filter(
           (card) => card.id !== action.payload.card.id
         );

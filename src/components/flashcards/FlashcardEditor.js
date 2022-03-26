@@ -1,15 +1,11 @@
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
-const backendUrl = "https://localhost:7046/";
-
-const tinyMCEApiKey = "xvg747f4fwkubgp85rlkyvbvqocdtnkgfcyqzhig8p55inlq";
-
 const FlashcardEditor = (props) => {
   const imageUpLoadHandler = (blobInfo, success, failure, progress) => {
     let formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
-    fetch(`https://localhost:7046/Decks/UploadPhysical`, {
+    fetch(`${process.env.BACKEND_URL}Decks/UploadPhysical`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -23,7 +19,7 @@ const FlashcardEditor = (props) => {
         return response.json();
       })
       .then((body) => {
-        success(backendUrl + body.url);
+        success(process.env.BACKEND_URL + body.url);
       })
       .catch((error) => failure(error.message));
   };
@@ -31,7 +27,7 @@ const FlashcardEditor = (props) => {
   return (
     <div className="container border-b-2 border-gray-900 focus-within:border-blue-500">
       <Editor
-        apiKey={tinyMCEApiKey}
+        apiKey={process.env.REACT_APP_TINIMCE_APIKEY}
         value={props.value}
         onEditorChange={(newValue, editor) => {
           props.setValue(newValue);

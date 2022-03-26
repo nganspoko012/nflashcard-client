@@ -1,3 +1,5 @@
+// Reference https://gist.github.com/riceissa/1ead1b9881ffbb48793565ce69d7dbdd
+
 // New Card Status
 const NEW_STEPS = [1, 10]; // minutes
 const GRADUATE_INTERVAL = 1; // days
@@ -114,15 +116,15 @@ export const getNewInterval = (card, option) => {
   switch (newCard.status) {
     case "new": {
       newInterval = newCardInterval(newCard, option);
-      return { newCard: newCard, newInterval: newInterval };
+      return { newCard, newInterval };
     }
     case "learned": {
       newInterval = learnedCardInterval(newCard, option);
-      return { newCard: newCard, newInterval: newInterval };
+      return { newCard, newInterval };
     }
     case "relearning": {
       newInterval = relearnCardInterval(newCard, option);
-      return { newCard: newCard, newInterval: newInterval };
+      return { newCard, newInterval };
     }
     default:
       throw new Error("Card status is not valid!");
