@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nflashcard-client/static/css/main.a6763b48.css",
+    "main.js": "/nflashcard-client/static/js/main.246cfc09.js",
+    "index.html": "/nflashcard-client/index.html",
+    "main.a6763b48.css.map": "/nflashcard-client/static/css/main.a6763b48.css.map",
+    "main.246cfc09.js.map": "/nflashcard-client/static/js/main.246cfc09.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6763b48.css",
+    "static/js/main.246cfc09.js"
+  ]
+}
