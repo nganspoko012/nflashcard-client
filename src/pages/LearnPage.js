@@ -21,7 +21,6 @@ const LearnPage = (props) => {
         dueCards: deck.flashcards.filter((flashcard) => {
           const dueDate = flashcard.lastedLearnDate + flashcard.interval;
           const today = Date.now();
-          console.log(today - dueDate);
           if (today - dueDate > 0) {
             return true;
           }
@@ -33,8 +32,6 @@ const LearnPage = (props) => {
 
   const dueCards = useSelector((state) => state.learn.dueCards);
   const completedCards = useSelector((state) => state.learn.completedCards);
-
-  console.log(dueCards);
 
   return (
     <div className="w-full md:container mx-auto">

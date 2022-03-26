@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import AboutUsPage from "../../pages/AboutUsPage";
 import AddDeckPage from "../../pages/AddDeckPage";
 import CommunityPage from "../../pages/CommunityPage";
+import DeckDetailsPage from "../../pages/DeckDetailsPage";
 import HomePage from "../../pages/HomePage";
 import LearnPage from "../../pages/LearnPage";
 import LoginPage from "../../pages/LoginPage";
@@ -34,6 +35,7 @@ const MainContent = (props) => {
         <Route path="/" exact element={<HomePage />} />
         <Route path="/decks" exact element={<HomePage />}></Route>
         <Route path="/add-deck" element={<AddDeckPage />} />
+        <Route path="/deck-details/:deckId" element={<DeckDetailsPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/learn/:deckId" element={<LearnPage />} />

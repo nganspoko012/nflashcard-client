@@ -5,6 +5,7 @@ let DUMMY_DECKS = [
   {
     id: 1,
     title: "600 Essential Words For TOEIC",
+    description: "From a book",
     scope: "private",
     author: {
       name: "Ngan Vo",
@@ -90,6 +91,13 @@ const deckSlice = createSlice({
       const newDeckToRemove = state.newDecks.find((deck) => deck.id === id);
       if (newDeckToRemove) state.newDecksCount--;
       state.newDecks = state.newDecks.filter((deck) => deck.id !== id);
+    },
+    changeDeck: (state, action) => {
+      const id = action.payload.id;
+      let deckToChangeIndex = state.decks.findIndex((deck) => deck.id === id);
+      if (deckToChangeIndex !== -1) {
+        state.decks[deckToChangeIndex] = action.payload;
+      }
     },
   },
 });

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FlashcardEditor from "./FlashcardEditor";
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
 
 const FlashcardInput = ({ id, dispatch }) => {
   const [frontCardValue, setFrontCardValue] = useState("");

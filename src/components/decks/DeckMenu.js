@@ -2,22 +2,38 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { faPlus, faEye, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const options = [
-  { text: "Add Flashcard", icon: faPlus, onClick: () => {} },
-  { text: "View Detail", icon: faEye, onClick: () => {} },
-  { text: "Delete Deck", icon: faTrashCan, onClick: () => {} },
-];
+import { useNavigate } from "react-router-dom";
 
 const DeckMenu = (props) => {
-  let deleteOption = options.find((option) => option.text === "Delete Deck");
-  deleteOption.onClick = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    props.onDelete();
-  };
+  const navigate = useNavigate();
+  const options = [
+    { text: "Add Flashcard", icon: faPlus, onClick: () => {} },
+    {
+      text: "View Detail",
+      icon: faEye,
+      onClick: (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        navigate(`/deck-details/${props.id}`);
+      },
+    },
+    {
+      text: "Delete Deck",
+      icon: faTrashCan,
+      onClick: (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        props.onDelete();
+      },
+    },
+  ];
+
   return (
     <Menu>
-      <Menu.Button className="hover:text-white hover:bg-blue-500 cursor-pointer">
+      <Menu.Button
+        className="hover:text-white hover:bg-blue-500 cursor-pointer"
+        onClick={(e) => e.stopPropagation()}
+      >
         {props.children}
       </Menu.Button>
 
@@ -30,7 +46,10 @@ const DeckMenu = (props) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right flex flex-col bg-white divide-y divide-gray-100 rounded shadow-lg ring-1 ring-black ring-opacity-5">
+        <Menu.Items
+          className="absolute right-0 w-56 mt-2 origin-top-right flex flex-col bg-white divide-y 
+          divide-gray-100 rounded shadow-lg ring-1 ring-black ring-opacity-5"
+        >
           <div className="px-1 py-1">
             {options.map((option) => (
               <Menu.Item key={option.text}>

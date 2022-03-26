@@ -36,7 +36,10 @@ const Deck = (props) => {
               <FontAwesomeIcon icon={scopeIcon} className="w-4" />
             </div>
             <div>
-              <DeckMenu onDelete={() => setIsShowDeleteModal(true)}>
+              <DeckMenu
+                id={props.id}
+                onDelete={() => setIsShowDeleteModal(true)}
+              >
                 <FontAwesomeIcon icon={faEllipsisVertical} className="w-4" />
               </DeckMenu>
             </div>

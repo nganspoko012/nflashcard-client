@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: npm run build --if-present
         env:
-          REACT_APP_TINYMCE_KEY: ${{ secrets.REACT_APP_TINYMCE_APIKEY }}
+          REACT_APP_TINYMCE_APIKEY: ${{ secrets.REACT_APP_TINYMCE_APIKEY }}
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
 
       - run: npm test

@@ -27,7 +27,7 @@ const FlashcardEditor = (props) => {
   return (
     <div className="container border-b-2 border-gray-900 focus-within:border-blue-500">
       <Editor
-        apiKey={process.env.REACT_APP_TINIMCE_APIKEY}
+        apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
         value={props.value}
         onEditorChange={(newValue, editor) => {
           props.setValue(newValue);

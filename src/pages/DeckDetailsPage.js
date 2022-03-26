@@ -5,23 +5,35 @@ import { decksAction } from "../store/deckSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
+import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
+import FlashcardInputs from "../components/flashcards/Inputs/FlashcardInputs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobeAmericas, faLock } from "@fortawesome/free-solid-svg-icons";
-import FlashcardInputs from "../components/flashcards/Inputs/FlashcardInputs";
 import flashcardInputsReducer from "../store/reducer/flashcardInputsReducer";
 
-const AddDeckPage = (props) => {
-  const decksCount = useSelector((state) => state.decks.decks.length);
+const DeckDetailsPage = (props) => {
+  const { deckId: id } = useParams();
+  const dispatchDeck = useDispatch();
+  const navigate = useNavigate();
+
+  const currentDeck = useSelector((state) =>
+    state.decks.decks.find((deck) => deck.id === +id)
+  );
   const [flashcardInputs, dispatchFlashcardInputs] = useReducer(
     flashcardInputsReducer,
     []
   );
 
   const [deckScope, setDeckScope] = useState("public");
-  const dispatchDeck = useDispatch();
-  const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (!currentDeck) {
+      navigate("/decks");
+    }
+  }, [currentDeck, navigate]);
 
   const {
     value: titleValue,
@@ -29,7 +41,7 @@ const AddDeckPage = (props) => {
     hasError: titleHasError,
     onChange: onTitleChanged,
     onBlur: onTitleBlur,
-  } = useInput((value) => value.trim().length > 3);
+  } = useInput((value) => value.trim().length > 3, currentDeck.title);
 
   const {
     value: desValue,
@@ -37,15 +49,21 @@ const AddDeckPage = (props) => {
     hasError: desHasError,
     onChange: onDesChanged,
     onBlur: onDesBlur,
-  } = useInput((value) => value.trim().length > 3);
+  } = useInput((value) => value.trim().length > 3, currentDeck.description);
 
   const changeScopeHandler = () => {
+    if (!isEdit) return;
     deckScope === "public" ? setDeckScope("private") : setDeckScope("public");
+  };
+
+  const editHandler = (event, value) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsEdit(value);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    event.stopPropagation();
     const flashcards = flashcardInputs
       .filter((input) => input.frontCard !== "" && input.backCard !== "")
       .map((input) => ({
@@ -53,24 +71,43 @@ const AddDeckPage = (props) => {
         frontCard: DOMPurify.sanitize(input.frontCard),
         backCard: DOMPurify.sanitize(input.backCard),
       }));
-    const deckToAdd = {
-      id: decksCount + 1,
+    const deckToChange = {
+      id: +id,
       title: titleValue,
-      scope: "public",
+      description: desValue,
+      scope: deckScope,
       author: {
-        name: "Ngan Vo",
+        name: "Bots",
       },
-      flashcards: flashcards,
+      flashcards,
       dueCards: 0,
       totalCards: flashcards.length,
       avgStars: 0,
     };
-    dispatchDeck(decksAction.addDeck(deckToAdd));
+
+    dispatchDeck(decksAction.changeDeck(deckToChange));
     navigate("/decks");
   };
   return (
     <div className="container mx-auto">
       <form onSubmit={submitHandler} className="w-full mt-4">
+        {isEdit ? (
+          <div className="flex justify-end mb-4 gap-2">
+            <Button
+              type="cancel"
+              onClick={(event) => editHandler(event, false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">Complete</Button>
+          </div>
+        ) : (
+          <div className="flex justify-end mb-4">
+            <Button type="button" onClick={(event) => editHandler(event, true)}>
+              Edit
+            </Button>
+          </div>
+        )}
         <div className="text-left rounded-md ring-1 ring-gray-200 shadow-lg p-4">
           <div className="flex flex-row">
             <h4 className="font-bold text-xl">Deck Infomation</h4>
@@ -82,6 +119,8 @@ const AddDeckPage = (props) => {
             >
               {
                 <FontAwesomeIcon
+                  width={32}
+                  height={32}
                   icon={deckScope === "public" ? faGlobeAmericas : faLock}
                 />
               }
@@ -104,6 +143,7 @@ const AddDeckPage = (props) => {
             onChange={onTitleChanged}
             onBlur={onTitleBlur}
             isValid={titleIsValid}
+            readOnly={isEdit ? false : true}
           />
           <label
             htmlFor="description"
@@ -121,6 +161,7 @@ const AddDeckPage = (props) => {
             onChange={onDesChanged}
             onBlur={onDesBlur}
             isValid={desIsValid}
+            readOnly={isEdit ? false : true}
           />
         </div>
 
@@ -128,13 +169,9 @@ const AddDeckPage = (props) => {
           flashcardInputs={flashcardInputs}
           dispatchFlashcardInputs={dispatchFlashcardInputs}
         />
-
-        <div className="flex justify-end mt-4">
-          <Button type="submit">Complete</Button>
-        </div>
       </form>
     </div>
   );
 };
 
-export default AddDeckPage;
+export default DeckDetailsPage;
