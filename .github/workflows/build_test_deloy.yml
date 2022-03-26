@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Deploy React App
 
 on:
   push:
@@ -26,21 +26,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
+
       - name: Build
         run: npm run build --if-present
         env:
-          REACT_APP_APIKey: ${{ secrets.REACT_APP_TINYMCE_APIKEY }}
-          REACT_APP_APISecret: ${{ secrets.REACT_APP_BACKEND_URL }}
+          REACT_APP_TINYMCE_KEY: ${{ secrets.REACT_APP_TINYMCE_APIKEY }}
+          REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
 
       - run: npm test
-      - name: Deloy
-        run: |
-          git config --global user.name $user_name
-          git config --global user.email $user_email
-          git remote set-url origin https://nganspoko012:${github_token}github.com/nganspoko012/${repository}
-          npm run deploy
-        env:
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-          repository: ${{ github.repository }}
+
+      - name: Deploy to gh-pages
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{secrets.ACTIONS_DELOY_KEY}}
+          publish_dir: ./build

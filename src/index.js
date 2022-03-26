@@ -9,7 +9,7 @@ import { store } from "./store/store";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/nflashcard-client">
         <App />
       </BrowserRouter>
     </Provider>
