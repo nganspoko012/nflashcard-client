@@ -1,12 +1,12 @@
 import styles from "./Flashcard.module.css";
 
-const Flashcard = ({ isFlipped, setIsFlipped, frontCard, backCard }) => {
+const Flashcard = ({ isFlipped, onFlip = () => {}, frontCard, backCard }) => {
   return (
     <div
       className={`w-full h-[40vh] md:h-[50vh] relative preserve-3d ${
         isFlipped ? styles.flip : ""
       } transition-transform`}
-      onClick={() => setIsFlipped((prevState) => !prevState)}
+      onClick={onFlip}
     >
       <div
         className="absolute w-full h-full bg-white shadow-md backface-hidden z-10"
