@@ -7,6 +7,7 @@ const learnSlice = createSlice({
     dueCards: [],
     completedCards: [],
     deckId: null,
+    isFlipped: false,
   },
   reducers: {
     learnACard: (state, action) => {
@@ -34,6 +35,10 @@ const learnSlice = createSlice({
       state.deckId = action.payload.deckId;
       state.dueCards = action.payload.dueCards;
       state.completedCards = [];
+      state.isFlipped = false;
+    },
+    flipCard: (state, action) => {
+      state.isFlipped = action.payload.isFlipped;
     },
   },
 });

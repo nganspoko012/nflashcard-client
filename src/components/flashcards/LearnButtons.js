@@ -13,6 +13,7 @@ const LearnButton = (props) => {
     try {
       const { newCard, newInterval } = getNewInterval(props.card, props.option);
       dispatch(learnActions.learnACard({ card: newCard, newInterval }));
+      dispatch(learnActions.flipCard({ isFlipped: false }));
     } catch (error) {
       console.log(error.message);
     }

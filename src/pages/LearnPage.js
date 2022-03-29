@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { learnActions } from "../store/learnSlice";
@@ -7,12 +7,12 @@ import LearnButtons from "../components/flashcards/LearnButtons";
 import LearnProgress from "../components/flashcards/LearnProgress";
 
 const LearnPage = (props) => {
-  const [isFlipped, setIsFlipped] = useState(false);
   const dispatch = useDispatch();
   const { deckId } = useParams();
   const deck = useSelector((state) =>
     state.decks.decks.find((deck) => deck.id === +deckId)
   );
+  const isFlipped = useSelector((state) => state.learn.isFlipped);
 
   useEffect(() => {
     dispatch(
@@ -44,7 +44,9 @@ const LearnPage = (props) => {
           />
           <Flashcard
             isFlipped={isFlipped}
-            setIsFlipped={setIsFlipped}
+            onFlip={() =>
+              dispatch(learnActions.flipCard({ isFlipped: !isFlipped }))
+            }
             frontCard={dueCards[0].frontCard}
             backCard={dueCards[0].backCard}
           />
