@@ -68,6 +68,7 @@ const AddDeckPage = (props) => {
     dispatchDeck(decksAction.addDeck(deckToAdd));
     navigate("/decks");
   };
+
   return (
     <div className="container mx-auto">
       <form onSubmit={submitHandler} className="w-full mt-4">

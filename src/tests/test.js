@@ -4,7 +4,7 @@ import {
   humanFriendlyTime,
   daysToMiliseconds,
   milisecondsToDays,
-} from "./newInterval.js";
+} from "../util/newInterval.js";
 
 let card = {
   status: "new",
