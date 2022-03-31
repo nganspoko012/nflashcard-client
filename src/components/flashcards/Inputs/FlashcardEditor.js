@@ -5,7 +5,7 @@ const FlashcardEditor = (props) => {
   const imageUpLoadHandler = (blobInfo, success, failure, progress) => {
     let formData = new FormData();
     formData.append("image", blobInfo.blob(), blobInfo.filename());
-    fetch(`${process.env.BACKEND_URL}Decks/UploadPhysical`, {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}images/upload/blob`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -19,7 +19,7 @@ const FlashcardEditor = (props) => {
         return response.json();
       })
       .then((body) => {
-        success(process.env.BACKEND_URL + body.url);
+        success(process.env.REACT_APP_BACKEND_URL + body.url);
       })
       .catch((error) => failure(error.message));
   };
