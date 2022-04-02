@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nflashcard-client/static/css/main.dd292cfb.css",
-    "main.js": "/nflashcard-client/static/js/main.e0b52115.js",
+    "main.js": "/nflashcard-client/static/js/main.13b76bf6.js",
     "index.html": "/nflashcard-client/index.html",
     "main.dd292cfb.css.map": "/nflashcard-client/static/css/main.dd292cfb.css.map",
-    "main.e0b52115.js.map": "/nflashcard-client/static/js/main.e0b52115.js.map"
+    "main.13b76bf6.js.map": "/nflashcard-client/static/js/main.13b76bf6.js.map"
   },
   "entrypoints": [
     "static/css/main.dd292cfb.css",
-    "static/js/main.e0b52115.js"
+    "static/js/main.13b76bf6.js"
   ]
 }
