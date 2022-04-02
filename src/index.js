@@ -9,7 +9,7 @@ import { store } from "./store/store";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HashRouter basename="/nflashcard-client">
+      <HashRouter>
         <App />
       </HashRouter>
     </Provider>
